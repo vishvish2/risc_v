@@ -64,7 +64,7 @@ async def program_counter_tb(dut):
     )
     dut._log.info("Re-reset asserted — PC correctly zeroed")
 
-    await Timer(5, unit="ns")
+    await Timer(10, unit="ns")
     dut.Reset.value = 0
 
     await FallingEdge(dut.CLK) 
