@@ -28,31 +28,43 @@ async def program_counter_tb(dut):
         0x00000010,
     ]
 
+    await FallingEdge(dut.CLK)      # Give DFF half a clock period for t_hold
+
     for pcnext_val in test_sequence:
         dut.PCNext.value = pcnext_val   # Change DFF input at falling edge for t_setup
+
+        dut._log.info(
+            f"PCNext={pcnext_val:#010x} -> PC={dut.PC.value.to_unsigned():#010x}"
+        )
+
         await RisingEdge(dut.CLK)       # DFF samples PCNext on this edge
         await FallingEdge(dut.CLK)      # Give DFF half a clock period for t_hold
+
+        # Check if the value propagated
         assert dut.PC.value == pcnext_val, (
             f"Expected PC={pcnext_val:#010x}, "
             f"got {dut.PC.value.to_unsigned():#010x}"
         )
-        dut._log.info(
-            f"PCNext={pcnext_val:#010x}  →  PC={dut.PC.value.to_unsigned():#010x}"
-        )
+    
+    dut._log.info(
+            f"PCNext={pcnext_val:#010x} -> PC={dut.PC.value.to_unsigned():#010x}"
+        )        
 
     # Test reset again
     await Timer(10, unit="ns")
     dut.Reset.value = 1
     dut.PCNext.value = 0x00000018
 
-    await RisingEdge(dut.CLK)
-    await RisingEdge(dut.CLK)
+    await RisingEdge(dut.CLK)           # DFF sees reset at this edge
+    await FallingEdge(dut.CLK)          # Wait half clock period for timing
+
+    # Check if PC output remains at zero when reset is asserted
     assert dut.PC.value == 0x00000000, (
         f"Expected 0x0 on re-reset, got {dut.PC.value.to_unsigned():#010x}"
     )
     dut._log.info("Re-reset asserted — PC correctly zeroed")
 
-    await Timer(10, unit="ns")
+    await Timer(5, unit="ns")
     dut.Reset.value = 0
 
     await FallingEdge(dut.CLK) 
@@ -64,7 +76,7 @@ async def program_counter_tb(dut):
         f"Expected 0x1e after re-reset release, "
         f"got {dut.PC.value.to_unsigned():#010x}"
     )
-    dut._log.info(f"Post-reset resume  PC={dut.PC.value.to_unsigned():#010x}")
+    dut._log.info(f"Post-reset resume PC={dut.PC.value.to_unsigned():#010x}")
 
     await Timer(20, unit="ns")
     dut._log.info("Test complete.")
