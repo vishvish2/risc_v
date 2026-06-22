@@ -20,9 +20,9 @@ always_ff @(posedge clk or posedge reset) begin
         div_counter <= 0;
         cpu_clk <= 0;
     end
-    else if (div_counter == 499) begin
+    else if (div_counter == 1) begin // cpu_clk clock cycle last 2 clock cycles of clk
         div_counter <= 0;
-        cpu_clk <= ~cpu_clk;
+        cpu_clk <= ~cpu_clk;    // clk = 100MHz, hence cpu_clk = 50MHz
     end
     else begin
         div_counter <= div_counter + 1;
