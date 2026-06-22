@@ -7,7 +7,7 @@ VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/extend.sv
 VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/alu.sv
 
 COMPILE_ARGS += -g2012
-all: pc ext
+all: pc ext alu
 pc:
 	rm -rf sim_build
 	mkdir -p dump_files
