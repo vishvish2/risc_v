@@ -29,7 +29,7 @@ async def extend_tb(dut):
         dut.Instr.value = instr_sequence[i][1]
         await Timer(10, unit="ns")
 
-        dut._log.info(f"{instr_sequence[i][2]}-Type")
+        dut._log.info(f"{instr_sequence[i][2]}-Type Instruction test")
 
         assert dut.ImmExt.value == expected_values[i], (
             f"Error at iteration {i}, "
