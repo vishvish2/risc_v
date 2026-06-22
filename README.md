@@ -1,3 +1,15 @@
+This repository can be forked and cloned to a local folder via `git clone`
+
+# Vivado
+The FPGA used is the Artix-7 Nexys A7 board with part number `xc7a100tcsg324-1`
+
+- The file `build.tcl` has a script to rebuild the Vivado project used to run the program on the FPGA.
+- After cloning the repository to a local folder, open Vivado then open the TCL Console via `Window -> Tcl Console`.
+- Use the `cd` command to navigate to the directory the repository is stored in
+    - For example, for me to do this, I would do `cd /home/vishnu/Documents/Vivado_Projects/risc_v`
+- Run `source build.tcl` to rebuild the Vivado project, the files in `risc_v.src` will be duplicated and stored in a folder called `risc_v` along with other required Vivado files folders
+- The project can be opened by opening the generated `risc_v.xpr` file in the Open Project menu.
+
 # External I/O
 This RISC-V microarchitecture has an external input `CPUIn` and an external output `CPUOut`. They are both 32-bit values.
 
