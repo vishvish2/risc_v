@@ -17,6 +17,8 @@ always_comb begin
         3'b010: ImmExt = imm2;  // B-Type
         3'b011: ImmExt = imm3;  // U-Type
         3'b100: ImmExt = imm4;  // J-Type
+        
+        default: ImmExt = 32'bx;
 
     endcase
 end

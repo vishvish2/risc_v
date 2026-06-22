@@ -20,7 +20,7 @@ always_ff @(posedge clk or posedge reset) begin
         div_counter <= 0;
         cpu_clk <= 0;
     end
-    else if (div_counter == 49999) begin
+    else if (div_counter == 499) begin
         div_counter <= 0;
         cpu_clk <= ~cpu_clk;
     end
