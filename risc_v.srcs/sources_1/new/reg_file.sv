@@ -5,7 +5,7 @@ module reg_file   (output logic [31:0] RD1, RD2,
 
 logic [31:0] RF [0:31];
 
-assign RD1 = (A1==5'b0) ? 32'b0 : RF[A1];
+assign RD1 = (A1==5'b0) ? 32'b0 : RF[A1];   // x0 always outputs zero
 assign RD2 = (A2==5'b0) ? 32'b0 : RF[A2];
 
 always_ff @ (posedge CLK)
