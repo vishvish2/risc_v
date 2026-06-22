@@ -7,7 +7,7 @@ async def extend_tb(dut):
         each of the instruction types
     """
 
-    # Test instructions of each type - (Immediate Source, Instruction, expected value)
+    # Test instructions of each type - (Immediate Source, Instruction, expected value, Instruction type)
     instr_sequence = [
         (0b000, 0b10110100101101011100101011010111, "I"),   # I-Type
         (0b001, 0b01101011100101011011110010101001, "S"),   # S-Type

@@ -28,7 +28,7 @@ always_comb begin
     endcase
 end
 
-assign Negative = ALUResult[31];
-assign Zero = ~|ALUResult;
+assign Negative = ALUResult[31];        // Asserted if output is negative
+assign Zero = ~|ALUResult;              // Asserted if output is zero
 
 endmodule
