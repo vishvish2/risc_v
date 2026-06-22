@@ -20,8 +20,8 @@ async def alu_tb(dut):
                         (0x000002BC, 0x00000208, 0b01011, "bitwise AND"),
                         (0x000002BC, 0x00000003, 0b01000, "shift left logical"),
                         (0x000002BC, 0x00000003, 0b10100, "shift right logical"),
-                        (0x000002BC, 0x00000003, 0b01101, "set less than false"),                       # 700 < 3 = False
-                        (0x000002BC, 0x000003E8, 0b01101, "set less than true"),                        # 700 < 1000 = True
+                        (0x000002BC, 0x00000003, 0b01101, "set less than, false"),                       # 700 < 3 = False
+                        (0x000002BC, 0x000003E8, 0b01101, "set less than, true"),                        # 700 < 1000 = True
                         ]
     
     # Expected output values - (ALUResult, Zero, Negative)
@@ -50,6 +50,15 @@ async def alu_tb(dut):
 
         dut._log.info(f"{control_sequence[i][3]}")
 
-        assert dut.ALUResult.value == expected_outputs[i][0]
-        assert dut.Zero.value == expected_outputs[i][1]
-        assert dut.Negative.value == expected_outputs[i][2]
+        assert dut.ALUResult.value == expected_outputs[i][0], (
+            f"Error at iteration {i}, "
+            f"Expected {expected_outputs[i][0]}, got {dut.ALUResult.value.to_unsigned():#010x}"
+            )
+        assert dut.Zero.value == expected_outputs[i][1], (
+            f"Error at iteration {i}, "
+            f"Expected {expected_outputs[i][1]}, got {dut.Zero.value}"
+            )
+        assert dut.Negative.value == expected_outputs[i][2], (
+            f"Error at iteration {i}, "
+            f"Expected {expected_outputs[i][2]}, got {dut.Negative.value}"
+            )
