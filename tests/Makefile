@@ -5,9 +5,10 @@ VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/program_counter.sv
 VERILOG_SOURCES += $(PWD)/wrappers/program_counter_test.sv
 VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/extend.sv
 VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/alu.sv
+VERILOG_SOURCES += $(PWD)/../risc_v.srcs/sources_1/new/control_unit.sv
 
 COMPILE_ARGS += -g2012
-all: pc ext alu
+all: pc ext alu cu
 pc:
 	rm -rf sim_build
 	mkdir -p dump_files
@@ -20,6 +21,10 @@ ext:
 alu:
 	rm -rf sim_build
 	$(MAKE) sim COCOTB_TEST_MODULES=alu_tb COCOTB_TOPLEVEL=alu
+
+cu:
+	rm -rf sim_build
+	$(MAKE) sim COCOTB_TEST_MODULES=control_unit_tb COCOTB_TOPLEVEL=control_unit
 
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
