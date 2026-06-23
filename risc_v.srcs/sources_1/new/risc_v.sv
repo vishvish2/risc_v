@@ -18,6 +18,25 @@ logic [31:0] RD, A, WD;
 
 logic [31:0] PCPlus4, PCTarget, Result;
 
+logic [31:0] PCF, PCNextF, PCPlus4F, PCPlus4D, PCPlus4E, PCPlus4M, PCPlus4W;
+logic [31:0] InstrD, PCD, PCE, PCTargetE, ImmExtD, ImmExtE;
+logic [31:0] RDE1, RDE2, SrcAE, SrcBE, ALUResultM, WriteDataE, WriteDataM, ReadDataW, ResultW;
+logic [4:0] Rs1D, Rs2D, RdD, Rs1E, Rs2E, RdE, RdM, RdW;
+logic ZeroE, NegativeE;
+
+logic RegWriteD, RegWriteE, RegWriteM, RegWriteW;
+logic [1:0] ResultSrcD, ResultSrcE, ResultSrcM, ResultSrcW;
+logic MemWriteD, MemWriteE, MemWriteM;
+logic JumpD;
+logic BranchD;
+logic [4:0] ALUControlD, ALUControlE;
+logic ALUSrcD, ALUSrcE;
+logic [2:0] ImmSrcD;
+logic [1:0] PCSrcE;
+
+logic StallF, StallD, FlushD, FlushE;
+logic [1:0] ForwardAE, ForwardBE;
+
 assign A1 = Instr[19:15];
 assign A2 = Instr[24:20];
 assign A3 = Instr[11:7];
@@ -35,7 +54,7 @@ program_counter prog_count (PC, PCNext, CLK, Reset, 0);
 instruction_memory instr_mem (Instr, PC);
 
 control_unit cu (MemWrite, ALUSrc, RegWrite, ALUControl, ImmSrc, PCSrc,
-    ResultSrc, Instr, Zero, Negative);
+    ResultSrc, JumpD, BranchD, Instr, Zero, Negative);
 
 reg_file register (RD1, RD2, WD3, A1, A2, A3, WE3, CLK);
 

@@ -1,8 +1,8 @@
 module hazard_unit(output logic StallF, StallD, FlushD, FlushE,
                     output logic [1:0] ForwardAE, ForwardBE,
                     input logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW,
-                    input logic [1:0] ResultSrcE,
-                    input logic PCSrcE, RegWriteM, RegWriteW);
+                    input logic [1:0] ResultSrcE, PCSrcE,
+                    input logic RegWriteM, RegWriteW);
 
 logic lwStall;
                                         
@@ -30,8 +30,8 @@ always_comb begin
     StallD = lwStall;
     
     // Control hazard register flush
-    FlushD = PCSrcE;
-    FlushE = lwStall || PCSrcE;
+    FlushD = (PCSrcE != 2'b00);
+    FlushE = lwStall || (PCSrcE != 2'b00);
 
 end
 
