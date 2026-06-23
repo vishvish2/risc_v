@@ -29,7 +29,7 @@ always_ff @(posedge clk or posedge reset) begin
     end
 end
 
-risc_v cpu (.CLK(cpu_clk),
+risc_v cpu (.CLK(clk),
             .CPUOut(cpu_out),
             .CPUIn(cpu_in), 
             .Reset(reset));
