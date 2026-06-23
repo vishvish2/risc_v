@@ -8,6 +8,7 @@ async def program_counter_tb(dut):
     """PC testbench to reset, increment and re-reset again."""
 
     cocotb.start_soon(Clock(dut.CLK, 10, unit="ns").start())
+    dut.EN.value = 0
 
     # Reset initially
     dut.Reset.value = 1             # Assert Reset

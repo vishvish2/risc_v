@@ -30,7 +30,7 @@ assign WD = RD2;
 assign A = ALUResult;
 assign WD3 = Result;
 
-program_counter prog_count (PC, PCNext, CLK, Reset);
+program_counter prog_count (PC, PCNext, CLK, Reset, 0);
 
 instruction_memory instr_mem (Instr, PC);
 
