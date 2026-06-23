@@ -1,8 +1,8 @@
 module control_unit (output logic MemWrite, ALUSrc, RegWrite,
                         output logic [4:0] ALUControl, 
                         output logic [2:0] ImmSrc,
-                        output logic [1:0] PCSrc, ResultSrc,
-                        output logic jump, branch,
+                        output logic [1:0] PCSrc, ResultSrc, jump,
+                        output logic [2:0] branch,
                         input logic [31:0] Instr,
                         input logic Zero, Negative);
 
@@ -25,8 +25,8 @@ always_comb begin
             ALUSrc = 1'b0;
             ResultSrc = 2'b00;
             PCSrc = 2'b00;
-            jump = 1'b0;
-            branch = 1'b0;
+            jump = 2'b00;
+            branch = 3'b000;
             case (funct3)
                 3'h0: ALUControl = (funct7 == 7'h00) ? 5'bx0x10 : 5'bx1x10; // add/sub
                 3'h6: ALUControl = 5'bxx111;                                // or
@@ -43,8 +43,8 @@ always_comb begin
             ALUSrc = 1'b1;
             ResultSrc = 2'b00;
             PCSrc = 2'b00;
-            jump = 1'b0;
-            branch = 1'b0;
+            jump = 2'b00;
+            branch = 3'b000;
             case (funct3)
                 3'h0: ALUControl = 5'bx0x10;            // addi
                 3'h6: ALUControl = 5'bxx111;            // ori
@@ -62,8 +62,8 @@ always_comb begin
             ALUControl = 5'bx0x10;
             ResultSrc = 2'b01;
             PCSrc = 2'b00;
-            jump = 1'b0;
-            branch = 1'b0;
+            jump = 2'b00;
+            branch = 3'b000;
         end
 
         7'b0100011: begin       // sw
@@ -72,8 +72,8 @@ always_comb begin
             ALUControl = 5'bx0x10;
             ResultSrc = 2'bxx;
             PCSrc = 2'b00;
-            jump = 1'b0;
-            branch = 1'b0;
+            jump = 2'b00;
+            branch = 3'b000;
         end
 
         7'b1100011: begin
@@ -81,14 +81,32 @@ always_comb begin
             ALUSrc = 1'b0;
             ALUControl = 5'bx1x10;
             ResultSrc = 2'bxx;
-            jump = 1'b0;
-            branch = 1'b1;
+            jump = 2'b00;
             case (funct3)
-                3'h0: PCSrc = {1'b0, Zero};             // beq
-                3'h1: PCSrc = {1'b0, ~Zero};            // bne
-                3'h4: PCSrc = {1'b0, Negative};         // blt
-                3'h5: PCSrc = {1'b0, ~Negative};        // bge
-                default: PCSrc = 2'bxx;
+                3'h0: begin
+                    PCSrc = {1'b0, Zero};             // beq
+                    branch = 3'b001;
+                end
+                
+                3'h1: begin
+                    PCSrc = {1'b0, ~Zero};            // bne
+                    branch = 3'b010;
+                end
+                
+                3'h4: begin
+                    PCSrc = {1'b0, Negative};         // blt
+                    branch = 3'b011;
+                end
+                
+                3'h5: begin
+                    PCSrc = {1'b0, ~Negative};        // bge
+                    branch = 3'b100;
+                end
+                
+                default: begin
+                    PCSrc = 2'bxx;
+                    branch = 3'bxxx;
+                end
             endcase
         end
 
@@ -98,8 +116,8 @@ always_comb begin
             ALUControl = 5'bxxxxx;
             ResultSrc = 2'b10;
             PCSrc = 2'b01;
-            jump = 1'b1;
-            branch = 1'b0;
+            jump = 2'b01;
+            branch = 3'b000;
         end
 
         7'b1100111: begin       // jalr
@@ -108,8 +126,8 @@ always_comb begin
             ALUControl = 5'bx0x10;
             ResultSrc = 2'b10;
             PCSrc = 2'b10;
-            jump = 1'b1;
-            branch = 1'b0;
+            jump = 2'b10;
+            branch = 3'b000;
         end
 
         7'b0110111: begin       // lui
@@ -118,8 +136,8 @@ always_comb begin
             ALUControl = 5'bxxxxx;
             ResultSrc = 2'b11;
             PCSrc = 2'b00;
-            jump = 1'b0;
-            branch = 1'b0;
+            jump = 2'b00;
+            branch = 3'b000;
         end
 
         default: begin
@@ -128,8 +146,8 @@ always_comb begin
             ALUControl = 5'bxxxxx;
             ResultSrc = 2'bxx;
             PCSrc = 2'bxx;
-            jump = 1'bx;
-            branch = 1'bx;
+            jump = 2'bxx;
+            branch = 3'bxxx;
         end
     endcase
 end
