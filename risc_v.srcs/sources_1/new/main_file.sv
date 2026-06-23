@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 module main_file(output logic [6:0] SEGMENT,
                     output logic [7:0] ANODE,
-                    output logic [5:0] LED,
-                    input logic [4:0] SWITCH,
+                    output logic [6:0] LED,
+                    input logic [5:0] SWITCH,
                     input clk, reset);
 
 logic [16:0] counter = 0;
@@ -10,7 +10,7 @@ logic [31:0] cpu_out;
 logic [31:0] cpu_in;
 logic [31:0] val;
 
-assign cpu_in = {27'd0, SWITCH};
+assign cpu_in = {26'd0, SWITCH};
 
 logic cpu_clk;
 logic [15:0] div_counter;
@@ -35,7 +35,7 @@ risc_v cpu (.CLK(cpu_clk),
             .Reset(reset));
 
 assign val = cpu_out;
-assign LED = cpu_out[5:0];
+assign LED = cpu_out[6:0];
 
 logic [3:0] ones;
 logic [3:0] tens;
