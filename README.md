@@ -8,22 +8,22 @@ The FPGA used is the Artix-7 Nexys A7 board with part number `xc7a100tcsg324-1`
 - Use the `cd` command to navigate to the directory the repository is stored in
     - For example, for me to do this, I would do `cd /home/vishnu/Documents/Vivado_Projects/risc_v`
 - Run `source build.tcl` to rebuild the Vivado project, the files in `risc_v.src` will be duplicated and stored in a folder called `risc_v` along with other required Vivado files folders
-- The project can be opened by opening the generated `risc_v.xpr` file in the Open Project menu.
+- The project can be opened by opening the generated `risc_v.xpr` file in the `Open Project` menu.
 
 # External I/O
 This RISC-V microarchitecture has an external input `CPUIn` and an external output `CPUOut`. They are both 32-bit values.
 
-When the load word (`lw`) instruction is called with the data memory address 0x7FFFFFFC as a source, the current value of `CPUIn` gets written to the specified destination register. For example:
+When the load word (`lw`) instruction is called with the data memory address `0x7FFFFFFC` as a source, the current value of `CPUIn` gets written to the specified destination register. For example:
 
 `lw x1, -5(x2)`
 
-If the value held in register x2 plus -5 is equal to 0x7FFFFFFC, then the value of `CPUIn` gets written to register x1.
+If the value held in register x2 plus -5 is equal to `0x7FFFFFFC`, then the value of `CPUIn` gets written to register x1.
 
-When the store word (`sw`) instruction is called with the data memory address 0x7FFFFFFC as a destination, the value held in the specified source register is written to `CPUOut`. For example:
+When the store word (`sw`) instruction is called with the data memory address `0x7FFFFFFC` as a destination, the value held in the specified source register is written to `CPUOut`. For example:
 
 `sw x1, 6(x2)`
 
-If the value held in register x2 plus 6 is equal to 0x7FFFFFFC, then the value held in register x1 gets written to `CPUOut`.
+If the value held in register x2 plus 6 is equal to `0x7FFFFFFC`, then the value held in register x1 gets written to `CPUOut`.
 
 # Testbenches
 Testbenches were written in Python using the cocotb library. Run them with the following steps:
