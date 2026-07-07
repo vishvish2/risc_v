@@ -2,7 +2,7 @@
 module main_file(output logic [6:0] SEGMENT,
                     output logic [7:0] ANODE,
                     output logic [6:0] LED,
-                    input logic [5:0] SWITCH,
+                    input logic [7:0] SWITCH,
                     input clk, reset);
 
 logic [16:0] counter = 0;
@@ -10,7 +10,7 @@ logic [31:0] cpu_out;
 logic [31:0] cpu_in;
 logic [31:0] val;
 
-assign cpu_in = {26'd0, SWITCH};
+assign cpu_in = {24'd0, SWITCH};
 
 logic cpu_clk;
 logic [15:0] div_counter;
