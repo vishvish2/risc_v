@@ -55,10 +55,10 @@ always_comb begin
         PCSrcE = 2'b10;                             // jalr
     else begin
         case (BranchE)
-            3'b001: PCSrcE = ZeroE ? 2'b01 : 2'b00;         // beq
-            3'b010: PCSrcE = ~ZeroE ? 2'b01 : 2'b00;        // bne
-            3'b011: PCSrcE = NegativeE ? 2'b01 : 2'b00;     // blt
-            3'b100: PCSrcE = ~NegativeE ? 2'b01 : 2'b00;    // bge
+            3'b001: PCSrcE = {1'b0, ZeroE};         // beq
+            3'b010: PCSrcE = {1'b0, ~ZeroE};        // bne
+            3'b011: PCSrcE = {1'b0, NegativeE};     // blt
+            3'b100: PCSrcE = {1'b0, ~NegativeE};    // bge
             default: PCSrcE = 2'b00;                        // not a branch
         endcase
     end
