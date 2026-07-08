@@ -56,11 +56,14 @@ Testbenches were written in Python using the cocotb library. After installing Py
 The machine code in `risc_v.srcs/sources_1/new/program.mem` translates to the following assembly
 
 ```asm
-addi x1, x0, 91     # Stores the value 91 in x1
+addi x1, x0, 89     # Stores the value 89 in x1
+addi x4, x0, 4      # Stores the value 4 in x4
+addi x5, x0, 5      # Stores the value 5 in x5
+addi x6, x0, 6      # Stores the value 6 in x6
 lui x10, 0x80000    # Store 0x80000000 in x10
 lw x2, -4(x10)      # 0x80000000 - 4 = 0x7FFFFFFC, CPUIn gets written to x2
-sub x3, x1, x2      # x3 = x1 – x2 = 91 - CPUIn
+sub x3, x1, x2      # x3 = x1 – x2 = 89 - CPUIn
 sw x3, -4(x10)      # 0x80000000 - 4 = 0x7FFFFFFC, CPUOut = x3
 jal x0, -12(x0)     # Jump back to line 3
 ```
-It performs the operation `CPUOut = 91 - CPUIn` where `CPUOut` and `CPUIn` are an external output and input to and from the microarchitecture.
+It performs the operation `CPUOut = 89 - CPUIn` where `CPUOut` and `CPUIn` are an external output and input to and from the microarchitecture.
