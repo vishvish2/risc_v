@@ -10,9 +10,18 @@ logic [31:0] cpu_out;
 logic [31:0] cpu_in;
 logic [31:0] val;
 
+logic clk_out, locked;
+
+clk_wiz_0 clk_gen (
+    .clk_in1(clk),      // 100MHz board clock
+    .clk_out1(clk_out), // 80MHz generated clock
+    .reset(reset),
+    .locked(locked)
+);
+
 assign cpu_in = {24'd0, SWITCH};
 
-risc_v cpu (.CLK(clk),
+risc_v cpu (.CLK(clk_out),
             .CPUOut(cpu_out),
             .CPUIn(cpu_in), 
             .Reset(reset));
@@ -30,7 +39,7 @@ assign ones = val % 10;
 logic sel;
 logic [3:0] digit;
 
-always @(posedge clk) begin
+always @(posedge clk_out) begin
     if (counter == 99999) begin
         counter <= 0;
         sel <= ~sel;      // pulse for one clock cycle
