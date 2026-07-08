@@ -61,6 +61,6 @@ lui x10, 0x80000    # Store 0x80000000 in x10
 lw x2, -4(x10)      # 0x80000000 - 4 = 0x7FFFFFFC, CPUIn gets written to x2
 sub x3, x1, x2      # x3 = x1 – x2 = 91 - CPUIn
 sw x3, -4(x10)      # 0x80000000 - 4 = 0x7FFFFFFC, CPUOut = x3
-jalr x0, 8(x0)      # Jump back to line 3
+jal x0, -12(x0)     # Jump back to line 3
 ```
 It performs the operation `CPUOut = 91 - CPUIn` where `CPUOut` and `CPUIn` are an external output and input to and from the microarchitecture.
