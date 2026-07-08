@@ -12,23 +12,6 @@ logic [31:0] val;
 
 assign cpu_in = {24'd0, SWITCH};
 
-logic cpu_clk;
-logic [15:0] div_counter;
-
-always_ff @(posedge clk or posedge reset) begin
-    if (reset) begin
-        div_counter <= 0;
-        cpu_clk <= 0;
-    end
-    else if (div_counter == 1) begin // cpu_clk clock cycle last 2 clock cycles of clk
-        div_counter <= 0;
-        cpu_clk <= ~cpu_clk;    // clk = 100MHz, hence cpu_clk = 50MHz
-    end
-    else begin
-        div_counter <= div_counter + 1;
-    end
-end
-
 risc_v cpu (.CLK(clk),
             .CPUOut(cpu_out),
             .CPUIn(cpu_in), 
@@ -40,7 +23,7 @@ assign LED = cpu_out[6:0];
 logic [3:0] ones;
 logic [3:0] tens;
 
-// Individual digits
+// Individual digits for seven segment display
 assign tens = val / 10;
 assign ones = val % 10;            
 
