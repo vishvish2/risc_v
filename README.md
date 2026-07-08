@@ -17,18 +17,18 @@ When the load word (`lw`) instruction is called with the data memory address `0x
 
 `lw x1, -5(x2)`
 
-If the value held in register x2 plus -5 is equal to `0x7FFFFFFC`, then the value of `CPUIn` gets written to register x1.
+If the value held in register `x2` plus `-5` is equal to `0x7FFFFFFC`, then the value of `CPUIn` gets written to register x1.
 
 When the store word (`sw`) instruction is called with the data memory address `0x7FFFFFFC` as a destination, the value held in the specified source register is written to `CPUOut`. For example:
 
 `sw x1, 6(x2)`
 
-If the value held in register x2 plus 6 is equal to `0x7FFFFFFC`, then the value held in register x1 gets written to `CPUOut`.
+If the value held in register `x2` plus `6` is equal to `0x7FFFFFFC`, then the value held in register x1 gets written to `CPUOut`.
 
 # Testbenches
-Testbenches were written in Python using the cocotb library. Run them with the following steps:
+Testbenches were written in Python using the cocotb library. After installing Python to your local computer, run them with the following steps:
 
-- Open VSCode or any suitable IDE in the same folder where u cloned this repository
+- Open VSCode or any suitable IDE in the same folder where you cloned this repository
 - Open a terminal and create and activate a virtual environment with the following commands
     - Windows:
     ```bash
