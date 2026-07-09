@@ -53,7 +53,7 @@ Testbenches were written in Python using the cocotb library. After installing Py
 
 # Machine Code
 
-The machine code in `risc_v.srcs/sources_1/new/program.mem` translates to the following assembly
+The machine code in `prog.txt` translates to the following assembly
 
 ```asm
 addi x1, x0, 89     # Stores the value 89 in x1
@@ -67,3 +67,8 @@ sw x3, -4(x10)      # 0x80000000 - 4 = 0x7FFFFFFC, CPUOut = x3
 bge x6, x5, -12     # Jump back 3 lines and repeat
 ```
 It performs the operation `CPUOut = 89 - CPUIn` where `CPUOut` and `CPUIn` are an external output and input to and from the microarchitecture.
+
+Modify the contents of `risc_v.srcs/sources_1/new/program.mem` to change the instruction memory.
+
+Below is the timing analysis at an 80MHz clock input.
+![Timing](img/timing.png "Timing")

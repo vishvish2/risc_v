@@ -4,8 +4,8 @@
 -- Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
 -- Date        : Wed Jul  8 14:46:42 2026
 -- Host        : vishnu-Yoga-Pro-9-16IMH9 running 64-bit Linux Mint 22.3
--- Command     : write_vhdl -force -mode synth_stub
---               /home/vishnu/Documents/Vivado_Projects/risc_v/risc_v.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top clk_wiz_0 -prefix
+--               clk_wiz_0_ clk_wiz_0_stub.vhdl
 -- Design      : clk_wiz_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tcsg324-1
